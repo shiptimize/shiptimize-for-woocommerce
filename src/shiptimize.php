@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Shiptimize for WooCommerce
  * Description: Shiptimize for WooCommerce  
- * Version: 3.1.57
+ * Version: 3.1.58
  * Author: Shiptimize
  * Author URI: https://shiptimize.me
  * Text Domain: shiptimize-for-woocommerce

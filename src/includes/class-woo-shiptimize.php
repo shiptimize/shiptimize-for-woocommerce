@@ -338,15 +338,18 @@ class WooShiptimize extends ShiptimizeV3 {
   public function rates_filter ( $rates, $package ) { 
   
     // Check if hide not free enabled 
+     
+    $free_not_local = false;
     if ( get_option('shiptimize_hide_not_free') ) {
       $free = array(); 
       foreach ( $rates as $id => $r) { 
         if ( $r->cost == 0 && $this->is_rate_valid( $r, $package ) ) {
-          $free[$rid] = $r; 
+          $free_not_local |= ($r->method_id != 'local_pickup'); 
+          $free[$id] = $r; 
         }
       }
 
-      if ( !empty( $free ) ) {
+      if ( !empty( $free ) && $free_not_local) {
         $rates = $free; 
       }  
     }

@@ -61,7 +61,7 @@
 
             ob_start(); 
                 echo "<script>
-                var shiptimize_carrier={\"Name\":\"Dummy dev carrier\",\"HasPickup\":false,\"Id\":29,\"OptionList\":[{\"Name\":\"Colli count\",\"OptionFields\":[{\"Id\":\"1\",\"Name\":\"Colli count\"}],\"Type\":2,\"ClassId\":35,\"IsPickup\":0,\"Id\":35}]};var shiptimize_extraoptions=[\"2\",\"47\",\"46\",\"49\",\"42\",\"62\",\"55\",\"73\",\"80\"];var shiptimize_checkboxes={\"13\":\"sendinsured\",\"31\":\"sendinsured\",\"32\":\"activatepickup\",\"57\":\"sendinsured\",\"70\":\"fragile\",\"56\":\"activatepickup\",\"59\":\"activatepickup\"};shiptimize_labels = {
+                var shiptimize_carrier={\"HasPickup\":false,\"Id\":29,\"OptionList\":[{\"Id\":35,\"OptionFields\":[{\"Name\":\"Colli count\",\"Id\":\"1\"}],\"Type\":2,\"Name\":\"Colli count\",\"IsPickup\":0,\"ClassId\":35}],\"Name\":\"Dummy dev carrier\"};var shiptimize_extraoptions=[\"2\",\"47\",\"46\",\"49\",\"42\",\"62\",\"55\",\"73\",\"80\"];var shiptimize_checkboxes={\"13\":\"sendinsured\",\"31\":\"sendinsured\",\"32\":\"activatepickup\",\"57\":\"sendinsured\",\"70\":\"fragile\",\"56\":\"activatepickup\",\"59\":\"activatepickup\"};shiptimize_labels = {
           'pickupbehaviour' : \"$pickup_behaviour_label\",
           'pickup0' : \"$pickup0\",
           'pickup1' : \"$pickup1\",
