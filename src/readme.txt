@@ -58,6 +58,9 @@ This way, you can stay focused on growing your business!
 
 == Changelog ==
 
+= 3.1.59 - 2022-11-01 = 
+* Fix - when sending item weight to the api, send the individual item weight not qty * item_weight
+
 = 3.1.58 - 2022-10-26 = 
 * Enhancement - When hiding all shipping methods not free, make sure only activate feature if the at least one free shipping is not "local pickup".
 

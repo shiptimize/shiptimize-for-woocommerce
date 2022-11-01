@@ -668,7 +668,7 @@ class WooShiptimizeOrder extends ShiptimizeOrder {
             $item_weight = 0;
 
             if( $product->has_weight() ) {
-              $item_weight = wc_get_weight(floatval($qty * $product->get_weight()),'g');
+              $item_weight = wc_get_weight(floatval($product->get_weight()),'g');
               $weight += $qty * $item_weight; 
             }
         
