@@ -588,7 +588,7 @@ class ShiptimizeShipping {
    */  
   public  function get_option_string($type,$class,$optionname,$defaultvalue='',$options=''){
       $str= "\$this->instance_form_fields['$optionname'] = array(
-                'title'             => \$shiptimize->translate('$optionname'),
+                'title'             => \$translate('$optionname'),
                 'type'              => '$type',
                 'class'       => '$class',
                 'default'           => $defaultvalue,";
@@ -747,10 +747,18 @@ class ShiptimizeShipping {
                 'instance-settings-modal',
           );
 
+          // Default to returning the string passed by param 
+          \$translate = function (\$str){ return \$str;}; 
+
           // how it's possible that someone declares this method before there's an instance of the plugin is a mistery to solve later 
           // possible they copied the code and did their own  rendition of the thing? 
-          if(!\$shiptimize) {
+          if(!\$shiptimize && class_exists('WooShiptimize')) {
             \$shiptimize = WooShiptimize::getInstance();
+          }
+
+          # If we have an instance of shiptimize, then use that translate function 
+          if(\$shiptimize) {
+            \$translate = function (\$str) { global \$shiptimize; return \$shiptimize->translate(\$str); };
           }
 
           \$this->init();
@@ -996,7 +1004,21 @@ class ShiptimizeShipping {
           );
 
           \$this->init();
-          
+
+          // Default to returning the string passed by param 
+          \$translate = function (\$str){ return \$str;}; 
+
+          // how it's possible that someone declares this method before there's an instance of the plugin is a mistery to solve later 
+          // possible they copied the code and did their own  rendition of the thing? 
+          if(!\$shiptimize && class_exists('WooShiptimize')) {
+            \$shiptimize = WooShiptimize::getInstance();
+          }
+
+          # If we have an instance of shiptimize, then use that translate function 
+          if(\$shiptimize) {
+            \$translate = function (\$str) { global \$shiptimize; return \$shiptimize->translate(\$str); };
+          }
+
           /*Service Level*/
           %s
           
@@ -1193,7 +1215,6 @@ class ShiptimizeShipping {
 
         public function get_admin_options_html()
         {
-            global \$shiptimize; 
             \$shiptimize_options = json_encode(get_option('wbs_'.\$this->instance_id.'_shiptimize'));
             $pickup_behaviour_label;
             $pickup0

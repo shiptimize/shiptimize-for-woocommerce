@@ -58,6 +58,9 @@ This way, you can stay focused on growing your business!
 
 == Changelog ==
 
+= 3.1.60 - 2022-11-01 = 
+* Fix - Some shops seem to load shipping methods before the plugin is loaded, triggering an error in trying to use a method in the plugin. We've written a fallback
+
 = 3.1.59 - 2022-11-01 = 
 * Fix - when sending item weight to the api, send the individual item weight not qty * item_weight
 
