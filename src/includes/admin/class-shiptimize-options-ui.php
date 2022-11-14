@@ -220,7 +220,7 @@ abstract class ShiptimizeOptionsUI {
    * If zones are defined but no price is set for them, 
    * Then the "Everywhere else won't be applied"
    */ 
-  private function table_rate_checks($rates, $zones){
+  public function table_rate_checks($rates, $zones){
     $zonesWithoutRates = array(); 
 
     foreach( $zones as $zone ){
