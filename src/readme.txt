@@ -58,6 +58,12 @@ This way, you can stay focused on growing your business!
 
 == Changelog ==
 
+= 3.1.63 - 2022-11-16 = 
+* Fix - Error with Weight Based Shipping methods 
+
+= 3.1.62 - 2022-11-16 = 
+* Fix - Issue with re-exporting a shipment that was exported and then deleted in the app.
+
 = 3.1.61 - 2022-11-01 = 
 * Fix - compatibility with "advanced trable rates" restaured.  
 

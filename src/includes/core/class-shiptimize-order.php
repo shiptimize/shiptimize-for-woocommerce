@@ -823,7 +823,7 @@ abstract class ShiptimizeOrder
             $data['ShippingMethodName'] = $this->ShippingMethodName;
         }
 
-        if($this->Transporter){
+        if($this->Transporter && is_numeric($this->Transporter)){
             $data['Carrier'] = array(
                 "Id"=> $this->Transporter,
            );

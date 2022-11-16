@@ -190,7 +190,7 @@ class WooShiptimize extends ShiptimizeV3 {
 
     self::callback_url();
 
-    //plugin is not run when we get here.. 
+    // Plugin is not run when we get here.. 
     $shiptimize = WooShiptimize::instance();
     $shiptimize->create_shiptimize_data_model('bigint(20) unsigned ');
     ShiptimizeMarketplace::activate($network_wide); 

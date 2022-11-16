@@ -733,14 +733,9 @@ class WooShiptimizeOrder extends ShiptimizeOrder {
             if($error->Id == 298) { // Shipment was deleted in the app and contains incorrect export status in the shop system
               WooShiptimize::log("Order $shipment->ShopItemId ");
               $order->set_status(ShiptimizeOrder::$STATUS_NOT_EXPORTED); 
-
-              self::export(array($shipment->ShopItemId)); 
-              $labelsummary = self::print_label(array($shipment->ShopItemId)); 
-              foreach ($labelsummary->errors as $err) {
-                array_push( $summary->errors, $err );  
-              }              
-
-              $actualerror = empty($labelsummary->errors) ? 0 : 1;
+              $order->append_errors( array(
+                (object) array("Tekst" => "Shipment was deleted in the app. Export again")  
+              ));
             } 
             else if($error->Id == 297 || $error->Id == 200) { // Shipment already pre-alerted 
               WooShiptimize::log("Considering error $error->Id as warning. $error->Tekst");
@@ -764,11 +759,6 @@ class WooShiptimizeOrder extends ShiptimizeOrder {
 
         } else {
           ++$summary->n_success;
-
-          if (isset($shipment->WarningList)) {
-            $order->append_errors($shipment->WarningList); 
-          }
-
           $order->set_status( ShiptimizeOrder::$STATUS_EXPORTED_SUCCESSFULLY );         
         }
 
@@ -780,7 +770,7 @@ class WooShiptimizeOrder extends ShiptimizeOrder {
             WooShiptimize::log("Appending Error $warning->Id $warning->Tekst");
             array_push( $summary->errors, array( 
               'Id' => $warning->Id,
-              'Tekst' => $warning->Tekst,
+              'Tekst' => 'Warn ' . $warning->Tekst,
               'ShopItemId' => $shipment->ShopItemId
             ) );  
           }
@@ -890,7 +880,7 @@ class WooShiptimizeOrder extends ShiptimizeOrder {
       else if ($response->httpCode == 401 ) {
         $shiptimize = WooShiptimize::instance(); 
         $summary->message .= '' . $shiptimize->translate('setcredentials');
-      }
+      } 
       else { 
         $patchsummary = self::shipments_response($response);
         $summary->n_success += $patchsummary->n_success; 

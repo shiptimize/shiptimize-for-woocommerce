@@ -1146,11 +1146,11 @@ class ShiptimizeShipping {
 
     $pickup_behaviour_label = "\$pickup_behaviour_label = \$shiptimize->translate('pickupbehaviour')";  
 
-    $pickup0 = "\$pickup0 = \$shiptimize->translate('pickuppointbehavior0');";
-    $pickup1 = "\$pickup1 = \$shiptimize->translate('pickuppointbehavior1');";
-    $pickup2 = "\$pickup2 = \$shiptimize->translate('pickuppointbehavior2');"; 
-    $extraoptions = "\$extraoptions = \$shiptimize->translate('extraoptions');"; 
-    $servicelevel = "\$servicelevel = \$shiptimize->translate('service_level');"; 
+    $pickup0 = "\$pickup0 = \$translate('pickuppointbehavior0');";
+    $pickup1 = "\$pickup1 = \$translate('pickuppointbehavior1');";
+    $pickup2 = "\$pickup2 = \$translate('pickuppointbehavior2');"; 
+    $extraoptions = "\$extraoptions = \$translate('extraoptions');"; 
+    $servicelevel = "\$servicelevel = \$translate('service_level');"; 
 
     $shiptimizejs .= "shiptimize_labels = {
           'pickupbehaviour' : \\\"\$pickup_behaviour_label\\\",
@@ -1215,6 +1215,22 @@ class ShiptimizeShipping {
 
         public function get_admin_options_html()
         {
+          global \$shiptimize; 
+          
+          // Default to returning the string passed by param 
+          \$translate = function (\$str){ return \$str;}; 
+
+          // how it's possible that someone declares this method before there's an instance of the plugin is a mistery to solve later 
+          // possible they copied the code and did their own  rendition of the thing? 
+          if(!\$shiptimize && class_exists('WooShiptimize')) {
+            \$shiptimize = WooShiptimize::getInstance();
+          }
+
+          # If we have an instance of shiptimize, then use that translate function 
+          if(\$shiptimize) {
+            \$translate = function (\$str) { global \$shiptimize; return \$shiptimize->translate(\$str); };
+          }
+
             \$shiptimize_options = json_encode(get_option('wbs_'.\$this->instance_id.'_shiptimize'));
             $pickup_behaviour_label;
             $pickup0
