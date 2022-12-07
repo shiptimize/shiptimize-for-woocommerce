@@ -482,6 +482,7 @@ class WooShiptimizeOrder extends ShiptimizeOrder {
       return; 
     }
 
+    WooShiptimize::log("Updating tracking $tracking_id for order [$this->ShopItemId]");
     $this->add_message($this->get_formated_message($shiptimize->translate("api sent trackingId:").' '.$tracking_id)); 
 
     $sql = sprintf("update  %sshiptimize set tracking_id=\"%s\" where id=%d  ", 
@@ -654,6 +655,11 @@ class WooShiptimizeOrder extends ShiptimizeOrder {
   public function get_product_with_meta($meta_key, $meta_value, $replace_total_weight = false){ 
         
         $items = $this->woo_order->get_items(); 
+
+        if(!is_array($items)) {
+          return array();
+        }
+
         $weight = 0; 
 
         $ShipmentItems = array(); 
@@ -979,6 +985,7 @@ class WooShiptimizeOrder extends ShiptimizeOrder {
             }
             else { // error we want to ignore 
               WooShiptimize::log("Ignoring error $error->Id for $order->ShopItemId $error->Tekst ");
+              
               array_push($labelorders, $order->ShopItemId);               
             }
           }
@@ -997,7 +1004,15 @@ class WooShiptimizeOrder extends ShiptimizeOrder {
     WooShiptimize::log("\nErrors " . json_encode($errors));
 
     if (!empty($labelorders)) { 
-      $labelresponse = WooShiptimize::get_api()->post_labels_step1($labelorders); 
+      // The api receives client references make sure we're sending that and not ShopItemIds 
+      $labelReference = array(); 
+      foreach ($labelorders as $orderid) { 
+        $reference = apply_filters( 'woocommerce_order_number', $orderid,  wc_get_order( $orderid ) );
+        array_push($labelReference, $reference); 
+        WooShiptimize::log("label for order id $orderid  ref $reference"); 
+      }
+
+      $labelresponse = WooShiptimize::get_api()->post_labels_step1($labelReference); 
       $labelresponse->ErrorList = $errors; 
       WooShiptimize::log( "Labelresponse " . json_encode($labelresponse) ); 
 

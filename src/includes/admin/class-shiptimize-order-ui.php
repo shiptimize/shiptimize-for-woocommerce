@@ -69,7 +69,7 @@ class ShiptimizeOrderUI {
     if (isset($response->response->Finished) && $response->response->Finished == 100) {
       if (isset($response->response->ClientReferenceCodeList)) {
         foreach($response->response->ClientReferenceCodeList as $labelresult) {
-          $order = new WooShiptimizeOrder($labelresult->ReferenceCode);
+          $order = new WooShiptimizeOrder($labelresult->ShopItemId);
           $status = ShiptimizeOrder::$LABEL_STATUS_NOT_REQUESTED; 
           $msg =  '';
           $labelurl = ''; 
@@ -88,7 +88,7 @@ class ShiptimizeOrderUI {
           $order_meta = $order->get_order_meta(); 
           $msg = $order_meta->message . $msg;  
           $labelresult->message = $msg; 
-          $order->set_label_meta($labelresult->ReferenceCode,$status,$labelurl,$msg);
+          $order->set_label_meta($labelresult->ShopItemId,$status,$labelurl,$msg);
         }    
       }  
     }

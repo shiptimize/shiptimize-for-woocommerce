@@ -642,7 +642,7 @@ abstract class ShiptimizeOrder
 
         $this->Description = $this->escape_text_data($this->Description); 
    
-        if(strlen($this->Description) > 255 ){
+        if($this->Description && strlen($this->Description) > 255 ){
             $this->Description = substr( $this->Description, 0, 255);  
             $chars = str_split($this->Description);  
            
@@ -654,12 +654,12 @@ abstract class ShiptimizeOrder
             } 
         }
 
-        if(strlen($this->PostalCode) > 15){
+        if($this->PostalCode && strlen($this->PostalCode) > 15){
             $originalPostalCode = $this->PostalCode;
 
             $words = explode(" ", $this->PostalCode); 
             $validPostalCode = '';
-            for ( $i = 0;  $i < count($words) && strlen($validPostalCode." " .$words[$i]) < 15 ; ++$i ){
+            for ( $i = 0;  $i < count($words) && strlen($validPostalCode . " " . $words[$i]) < 15 ; ++$i ){
                 $validPostalCode .= ($i ? " " : "") . $words[$i]; 
             }
 
