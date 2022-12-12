@@ -58,7 +58,7 @@ This way, you can stay focused on growing your business!
 
 == Changelog ==
 
-= 3.1.64 - 2022-11-16 = 
+= 3.1.64 - 2022-12-07 = 
 * Fix - Error when creating labels from websites that use custom order numbers 
 
 = 3.1.63 - 2022-11-16 = 
